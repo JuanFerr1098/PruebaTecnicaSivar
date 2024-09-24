@@ -5,7 +5,6 @@
         public UserDetailResponse(Guid id) : base(id)
         {
         }
-
         public string Name { get; set; }
         public string LastName { get; set; }
         public RoleDetailResponse Role { get; set; }

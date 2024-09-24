@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PruebaTecnicaSivar.Domain.Entity;
 using PruebaTecnicaSivar.Domain.Repository;
 using PruebaTecnicaSivar.Infrastructure.Context;
@@ -11,5 +12,6 @@ namespace PruebaTecnicaSivar.Infrastructure.Adapter
         public RoleRepositoryAdapter(InfrastructureEFContext context, IMapper mapper) : base(context, mapper)
         {
         }
+
     }
 }

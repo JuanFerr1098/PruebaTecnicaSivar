@@ -1,6 +1,4 @@
-﻿using PruebaTecnicaSivar.DomainCommon.Entity;
-
-namespace PruebaTecnicaSivar.ApplicationDomain.Dto.Response
+﻿namespace PruebaTecnicaSivar.ApplicationDomain.Dto.Response
 {
     public class CommonDetailResponse<ID>
     {
