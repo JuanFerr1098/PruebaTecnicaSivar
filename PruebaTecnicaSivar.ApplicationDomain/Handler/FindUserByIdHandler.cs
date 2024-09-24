@@ -4,7 +4,6 @@ using PruebaTecnicaSivar.ApplicationDomain.Dto.Query;
 using PruebaTecnicaSivar.ApplicationDomain.Dto.Response;
 using PruebaTecnicaSivar.Domain.Repository;
 using PruebaTecnicaSivar.ApplicationDomain.Exceptions;
-using System.IO;
 using PruebaTecnicaSivar.Domain.Entity;
 
 namespace PruebaTecnicaSivar.ApplicationDomain.Handler
