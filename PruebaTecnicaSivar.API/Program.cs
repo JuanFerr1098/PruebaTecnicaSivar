@@ -1,3 +1,4 @@
+using PruebaTecnicaSivar.API.Middleware;
 using PruebaTecnicaSivar.ApplicationDomain.IoC;
 using PruebaTecnicaSivar.Infrastructure.IoC;
 
@@ -26,6 +27,7 @@ namespace PruebaTecnicaSivar.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 

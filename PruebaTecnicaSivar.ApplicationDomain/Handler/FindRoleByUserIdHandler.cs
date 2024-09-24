@@ -2,6 +2,8 @@
 using MediatR;
 using PruebaTecnicaSivar.ApplicationDomain.Dto.Query;
 using PruebaTecnicaSivar.ApplicationDomain.Dto.Response;
+using PruebaTecnicaSivar.ApplicationDomain.Exceptions;
+using PruebaTecnicaSivar.Domain.Entity;
 using PruebaTecnicaSivar.Domain.Repository;
 
 namespace PruebaTecnicaSivar.ApplicationDomain.Handler
@@ -22,6 +24,10 @@ namespace PruebaTecnicaSivar.ApplicationDomain.Handler
             if (request.Id != null)
             {
                 var response = (await _userRepository.GetRoleByUserId(request.Id));
+                if (response == null)
+                {
+                    throw new NotFoundException(nameof(User), request.Id);
+                }
                 var resp = new RoleDetailResponse(response.Role.Id)
                 {
                     RoleName = response.Role.RoleName
