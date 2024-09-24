@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PruebaTecnicaSivar.DomainCommon\PruebaTecnicaSivar.DomainCommon.csproj" />
     <ProjectReference Include="..\PruebaTecnicaSivar.Domain\PruebaTecnicaSivar.Domain.csproj" />
   </ItemGroup>
 

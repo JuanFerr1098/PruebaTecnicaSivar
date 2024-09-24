@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PruebaTecnicaSivar.DomainCommon.Entity;
 using PruebaTecnicaSivar.Infrastructure.Entity;
 
 namespace PruebaTecnicaSivar.Infrastructure.Context
@@ -38,21 +39,20 @@ namespace PruebaTecnicaSivar.Infrastructure.Context
         {
             modelBuilder.Entity<UserEntity>()
                 .HasOne(x => x.Role)
-                .WithOne(x => x.User)
-                .HasForeignKey<UserEntity>(x => x.RoleId)
-                .IsRequired()
+                .WithMany(x => x.Users)
+                .HasForeignKey(x => x.RoleId)
+                .IsRequired(false)
                 ;
 
             modelBuilder.Entity<UserEntity>()
                 .HasMany(x => x.Companies)
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId)
-                .IsRequired()
+                .IsRequired(false)
                 ;
 
             modelBuilder.Entity<CompanyEntity>()
                 .HasIndex(x => x.UserId)
-                .IsUnique()
                 ;
         }
     }

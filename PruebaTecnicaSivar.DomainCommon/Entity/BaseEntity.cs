@@ -2,12 +2,7 @@
 {
     public class BaseEntity<ID>
     {
-        public ID Id { get; set; }
-
-        public BaseEntity(ID id)
-        {
-            Id = id;
-        }
+        public ID? Id { get; set; }      
 
         public override bool Equals(object? obj) => obj is BaseEntity<ID> entity &&
                 EqualityComparer<ID>.Default.Equals(Id, entity.Id);

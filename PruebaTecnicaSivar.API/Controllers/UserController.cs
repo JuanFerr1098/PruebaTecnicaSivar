@@ -1,6 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PruebaTecnicaSivar.ApplicationDomain.Dto;
+using PruebaTecnicaSivar.ApplicationDomain.Dto.Command;
+using PruebaTecnicaSivar.ApplicationDomain.Dto.Query;
+using PruebaTecnicaSivar.ApplicationDomain.Dto.Response;
+using PruebaTecnicaSivar.ApplicationDomain.Handler;
+using System.Net;
 
 namespace PruebaTecnicaSivar.API.Controllers
 {
@@ -8,16 +12,43 @@ namespace PruebaTecnicaSivar.API.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
         private readonly IMediator _mediator;
 
-        public UserController(ILogger<UserController> logger, IMediator mediator)
+        public UserController(IMediator mediator)
         {
-            _logger = logger;
             _mediator = mediator;
         }
 
-        [HttpGet(Name = "UserById/{id}")]
-        public async Task<UserDetailResponse> GetById(Guid id) => await _mediator.Send(new UserDetailQuery() { Id = id }); 
+        [HttpGet(Name = "GetUsers")]
+        [ProducesResponseType(typeof(IEnumerable<UserDetailResponse>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<UserDetailResponse>>> GetAllUsers()
+        {
+            var query = new FindAllUsersQuery();
+            var users = await _mediator.Send(query);
+            return Ok(users);
+        }
+
+        [HttpGet("{id}", Name = "UserById")]
+        [ProducesResponseType(typeof(UserDetailResponse), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<UserDetailResponse>> GetById(Guid id)
+        {
+            var query = new FindUserByIdQuery(id);
+            var user = await _mediator.Send(query);
+            return Ok(user);
+        }
+
+        [HttpPost(Name = "CreateUser")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<UserDetailResponse>> CreateUser([FromBody] CreateUserCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpPost("/AssignRole", Name = "AssignRole")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<ActionResult<UserDetailResponse>> AssignRole([FromBody] AssignRoleCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

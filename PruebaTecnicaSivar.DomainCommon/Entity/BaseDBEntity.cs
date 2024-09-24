@@ -1,4 +1,4 @@
-﻿namespace PruebaTecnicaSivar.Infrastructure.Entity
+﻿namespace PruebaTecnicaSivar.DomainCommon.Entity
 {
     public class BaseDBEntity<ID>
     {

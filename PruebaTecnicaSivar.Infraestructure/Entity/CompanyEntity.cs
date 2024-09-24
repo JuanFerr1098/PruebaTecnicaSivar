@@ -1,4 +1,6 @@
-﻿namespace PruebaTecnicaSivar.Infrastructure.Entity
+﻿using PruebaTecnicaSivar.DomainCommon.Entity;
+
+namespace PruebaTecnicaSivar.Infrastructure.Entity
 {
     public class CompanyEntity : BaseDBEntity<Guid>
     {

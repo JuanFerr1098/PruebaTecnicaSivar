@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PruebaTecnicaSivar.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using PruebaTecnicaSivar.Infrastructure.Context;
 namespace PruebaTecnicaSivar.Infrastructure.Migrations
 {
     [DbContext(typeof(InfrastructureEFContext))]
-    partial class InfrastructureEFContextModelSnapshot : ModelSnapshot
+    [Migration("20240924050006_AddTablesRelations4")]
+    partial class AddTablesRelations4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,6 +44,7 @@ namespace PruebaTecnicaSivar.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UserId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserUpdated")
@@ -48,7 +52,8 @@ namespace PruebaTecnicaSivar.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Companies");
                 });
@@ -108,7 +113,9 @@ namespace PruebaTecnicaSivar.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .IsUnique()
+                        .HasFilter("[RoleId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -117,7 +124,9 @@ namespace PruebaTecnicaSivar.Infrastructure.Migrations
                 {
                     b.HasOne("PruebaTecnicaSivar.Infrastructure.Entity.UserEntity", "User")
                         .WithMany("Companies")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -125,15 +134,15 @@ namespace PruebaTecnicaSivar.Infrastructure.Migrations
             modelBuilder.Entity("PruebaTecnicaSivar.Infrastructure.Entity.UserEntity", b =>
                 {
                     b.HasOne("PruebaTecnicaSivar.Infrastructure.Entity.RoleEntity", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .WithOne("User")
+                        .HasForeignKey("PruebaTecnicaSivar.Infrastructure.Entity.UserEntity", "RoleId");
 
                     b.Navigation("Role");
                 });
 
             modelBuilder.Entity("PruebaTecnicaSivar.Infrastructure.Entity.RoleEntity", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PruebaTecnicaSivar.Infrastructure.Entity.UserEntity", b =>

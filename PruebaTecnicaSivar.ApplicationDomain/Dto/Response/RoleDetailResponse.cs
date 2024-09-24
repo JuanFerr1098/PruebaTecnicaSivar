@@ -1,4 +1,4 @@
-﻿namespace PruebaTecnicaSivar.ApplicationDomain.Dto
+﻿namespace PruebaTecnicaSivar.ApplicationDomain.Dto.Response
 {
     public class RoleDetailResponse : CommonDetailResponse<Guid>
     {
