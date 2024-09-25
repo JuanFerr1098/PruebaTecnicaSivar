@@ -1,7 +1,7 @@
+using PruebaTecnicaSivar.API.App_Start;
 using PruebaTecnicaSivar.API.Middleware;
 using PruebaTecnicaSivar.ApplicationDomain.IoC;
 using PruebaTecnicaSivar.Infrastructure.IoC;
-
 namespace PruebaTecnicaSivar.API
 {
     public class Program
@@ -16,6 +16,7 @@ namespace PruebaTecnicaSivar.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddCorsDocumentation();
             builder.Services.AddApplicationService();
             builder.Services.AddInfrastructureService(builder.Configuration);
 
@@ -28,6 +29,8 @@ namespace PruebaTecnicaSivar.API
                 app.UseSwaggerUI();
             }
             app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseCorsDocumentation();
 
             app.UseHttpsRedirection();
 

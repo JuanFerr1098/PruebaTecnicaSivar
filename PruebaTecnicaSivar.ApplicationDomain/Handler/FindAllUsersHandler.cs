@@ -19,7 +19,7 @@ namespace PruebaTecnicaSivar.ApplicationDomain.Handler
 
         public async Task<List<UserDetailResponse>> Handle(FindAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var response = await _userRepository.GetAllAsync();
+            var response = await _userRepository.GetAllUsers();
             return _mapper.Map<List<UserDetailResponse>>(response);
         }
     }

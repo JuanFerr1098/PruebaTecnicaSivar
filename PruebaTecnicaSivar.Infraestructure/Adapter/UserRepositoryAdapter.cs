@@ -13,6 +13,12 @@ namespace PruebaTecnicaSivar.Infrastructure.Adapter
         {
         }
 
+        public async Task<List<User>> GetAllUsers()
+        {
+            var response = await _context.Users.Include(r => r.Role).Include(c => c.Companies).ToListAsync();
+            return _mapper.Map<List<User>>(response);
+        }
+
         public async Task<List<Company>> GetCompaniesByUserId(Guid id)
         {
             var response = await _context.Companies.Include(c => c.User).Where(x => x.UserId.Equals(id)).ToListAsync();
