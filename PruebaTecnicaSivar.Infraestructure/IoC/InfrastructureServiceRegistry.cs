@@ -17,7 +17,7 @@ namespace PruebaTecnicaSivar.Infrastructure.IoC
 
             services.AddDbContext<InfrastructureEFContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("ConnectionString"));
+                options.UseNpgsql(configuration.GetConnectionString("ConnectionString"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
             services.AddScoped<IBaseRepositoryFactory, BaseRepositoryFactoryAdapter>();

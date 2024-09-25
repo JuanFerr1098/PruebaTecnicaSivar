@@ -8,6 +8,7 @@ namespace PruebaTecnicaSivar.Infrastructure.Context
     {
         public InfrastructureEFContext(DbContextOptions<InfrastructureEFContext> options) : base(options)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         public DbSet<UserEntity> Users { get; set; }
