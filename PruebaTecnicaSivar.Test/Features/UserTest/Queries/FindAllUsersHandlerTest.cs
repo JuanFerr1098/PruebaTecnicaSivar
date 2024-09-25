@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using Moq;
 using PruebaTecnicaSivar.ApplicationDomain.Dto.Query;
+using PruebaTecnicaSivar.ApplicationDomain.Dto.Response;
 using PruebaTecnicaSivar.ApplicationDomain.Handler;
 using PruebaTecnicaSivar.ApplicationDomain.Mapper;
 using PruebaTecnicaSivar.Domain.Repository;
 using PruebaTecnicaSivar.Test.Mocks;
+using Shouldly;
 
-namespace PruebaTecnicaSivar.Test.Features.User.Queries
+namespace PruebaTecnicaSivar.Test.Features.UserTest.Queries
 {
     public class FindAllUsersHandlerTest
     {
@@ -27,10 +29,10 @@ namespace PruebaTecnicaSivar.Test.Features.User.Queries
         public async Task FindAllUsersTest()
         {
             var handler = new FindAllUsersHandler(_userRepository.Object, _mapper);
-            var response = await handler.Handle(
-                new FindAllUsersQuery() { }, 
-                CancellationToken.None);
-            Assert.Equal(1,1);
+            var req = new FindAllUsersQuery();
+            var res = await handler.Handle(req, CancellationToken.None);
+            res.ShouldBeOfType<List<UserDetailResponse>>();
+            res.Count.ShouldBe(3);
         }
     }
 }

@@ -6,7 +6,7 @@ using PruebaTecnicaSivar.ApplicationDomain.Mapper;
 using PruebaTecnicaSivar.Domain.Repository;
 using PruebaTecnicaSivar.Test.Mocks;
 
-namespace PruebaTecnicaSivar.Test.Features.User.Queries
+namespace PruebaTecnicaSivar.Test.Features.UserTest.Queries
 {
     public class FindUserByIdHandlerTest
     {
@@ -15,7 +15,7 @@ namespace PruebaTecnicaSivar.Test.Features.User.Queries
 
         public FindUserByIdHandlerTest()
         {
-            _userRepository = MockUserRepository.GetUserRepository();
+            _userRepository = MockUserRepository.GetUserRepositoryById();
             var mapperConfig = new MapperConfiguration(x =>
             {
                 x.AddProfile<MappingProfile>();
@@ -27,12 +27,9 @@ namespace PruebaTecnicaSivar.Test.Features.User.Queries
         public async Task FindUserByIdTest()
         {
             var handler = new FindUserByIdHandler(_userRepository.Object, _mapper);
-            var response = await handler.Handle(new FindUserByIdQuery(
-                Guid.Parse("E5628C6C-351B-4D2D-3BE9-08DCDC572924"))
-            {
-                
-            },CancellationToken.None);
-            Assert.Equal(1,1);
+            var req = new FindUserByIdQuery(Guid.Parse("86E86D53-4D2F-4A20-4A25-08DCDC91D603"));
+            var response = await handler.Handle(req,CancellationToken.None);
+            Assert.Equal(Guid.Parse("86E86D53-4D2F-4A20-4A25-08DCDC91D603"), response.Id);
         }
     }
 }
